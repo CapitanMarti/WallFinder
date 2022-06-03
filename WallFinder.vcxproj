@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{6af0c42e-4841-4496-8edf-6a4cf272d872}</ProjectGuid>
+    <RootNamespace>WallFinder</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>D:\Andrea\Dev\C++\PointCloud\Common\include;D:\vcpkg\packages\pcl_x86-windows\include;D:\vcpkg\packages\boost-mpl_x86-windows\include;D:\vcpkg\packages\boost-config_x86-windows\include;D:\vcpkg\packages\boost-preprocessor_x86-windows\include;D:\vcpkg\packages\boost-fusion_x86-windows\include;D:\vcpkg\packages\boost-type-traits_x86-windows\include;D:\vcpkg\packages\eigen3_x86-windows\include;D:\vcpkg\packages\boost-assert_x86-windows\include;D:\vcpkg\packages\boost-predef_x86-windows\include;D:\vcpkg\packages\boost-core_x86-windows\include;D:\vcpkg\packages\boost-foreach_x86-windows\include;D:\vcpkg\packages\boost-range_x86-windows\include;D:\vcpkg\packages\boost-iterator_x86-windows\include;D:\vcpkg\packages\boost-static-assert_x86-windows\include;D:\vcpkg\packages\boost-detail_x86-windows\include;D:\vcpkg\packages\boost-numeric-conversion_x86-windows\include;D:\vcpkg\packages\boost-throw-exception_x86-windows\include;D:\vcpkg\packages\boost-algorithm_x86-windows\include;D:\vcpkg\packages\boost-concept-check_x86-windows\include;D:\vcpkg\packages\boost-utility_x86-windows\include;D:\vcpkg\packages\boost-interprocess_x86-windows\include;D:\vcpkg\packages\boost-winapi_x86-windows\include;D:\vcpkg\packages\boost-move_x86-windows\include;D:\vcpkg\packages\boost-intrusive_x86-windows\include;D:\Andrea\Dev\C++\CommonLib\tinyxml2;D:\Andrea\Dev\C++\CommonLib\include</AdditionalIncludeDirectories>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <SupportJustMyCode>false</SupportJustMyCode>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>D:\vcpkg\packages\pcl_x86-windows\lib\pcl_io.lib;D:\vcpkg\packages\pcl_x86-windows\lib\pcl_common.lib;D:\Andrea\Dev\C++\CommonLib\tinyxml2\$(Platform)\$(Configuration)\TinyXml2Lib.lib</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>D:\Andrea\Dev\C++\PointCloud\Common\include;D:\vcpkg\packages\pcl_x86-windows\include;D:\vcpkg\packages\boost-mpl_x86-windows\include;D:\vcpkg\packages\boost-config_x86-windows\include;D:\vcpkg\packages\boost-preprocessor_x86-windows\include;D:\vcpkg\packages\boost-fusion_x86-windows\include;D:\vcpkg\packages\boost-type-traits_x86-windows\include;D:\vcpkg\packages\eigen3_x86-windows\include;D:\vcpkg\packages\boost-assert_x86-windows\include;D:\vcpkg\packages\boost-predef_x86-windows\include;D:\vcpkg\packages\boost-core_x86-windows\include;D:\vcpkg\packages\boost-foreach_x86-windows\include;D:\vcpkg\packages\boost-range_x86-windows\include;D:\vcpkg\packages\boost-iterator_x86-windows\include;D:\vcpkg\packages\boost-static-assert_x86-windows\include;D:\vcpkg\packages\boost-detail_x86-windows\include;D:\vcpkg\packages\boost-numeric-conversion_x86-windows\include;D:\vcpkg\packages\boost-throw-exception_x86-windows\include;D:\vcpkg\packages\boost-algorithm_x86-windows\include;D:\vcpkg\packages\boost-concept-check_x86-windows\include;D:\vcpkg\packages\boost-utility_x86-windows\include;D:\vcpkg\packages\boost-interprocess_x86-windows\include;D:\vcpkg\packages\boost-winapi_x86-windows\include;D:\vcpkg\packages\boost-move_x86-windows\include;D:\vcpkg\packages\boost-intrusive_x86-windows\include;D:\Andrea\Dev\C++\CommonLib\tinyxml2;D:\Andrea\Dev\C++\CommonLib\include</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>D:\vcpkg\packages\pcl_x86-windows\lib\pcl_io.lib;D:\vcpkg\packages\pcl_x86-windows\lib\pcl_common.lib;D:\Andrea\Dev\C++\CommonLib\tinyxml2\$(Platform)\$(Configuration)\TinyXml2Lib.lib</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>D:\Andrea\Dev\C++\PointCloud\Common\include;D:\Andrea\Dev\C++\CommonLib\tinyxml2;D:\Andrea\Dev\C++\CommonLib\include;D:\Andrea\Dev\C++\CommonLib\json\single_include\nlohmann;D:\Andrea\Dev\C++\PCL 1.12.1\include\pcl-1.12;D:\Andrea\Dev\C++\CommonLib\libE57Format\include;D:\Andrea\Dev\C++\CommonLib\libE57Format\Lib;D:\Andrea\Dev\C++\CommonLib\DFT\pocketfft;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\Boost\include\boost-1_78;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\Eigen\eigen3;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\include\vtk-9.1;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\include\vtk-9.1\vtkfreetype\include;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\FLANN\include;%(AdditionalIncludeDirectories);D:\Andrea\Dev\C++\CommonLib;D:\Andrea\Dev\C++\CommonLib\rapidcsv\src;D:\Andrea\Dev\C++\PCL 1.12.1\include\pcl-1.12\pcl</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>D:\Andrea\Dev\C++\CommonLib\tinyxml2\$(Platform)\$(Configuration)\TinyXml2Lib.lib;D:\Andrea\Dev\C++\CommonLib\RplyLib\$(Platform)\$(Configuration)\RplyLib.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_commond.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_iod.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_featuresd.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_filtersd.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_io_plyd.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_kdtreed.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_keypointsd.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_mld.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_octreed.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_outofcored.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_peopled.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_recognitiond.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_registrationd.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_sample_consensusd.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_searchd.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_segmentationd.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_stereod.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_surfaced.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_trackingd.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_visualizationd.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkViewsContext2D-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkChartsCore-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkCommonCore-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkRenderingOpenGL2-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkRenderingImage-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkRenderingContextOpenGL2-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkInteractionImage-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkRenderingLOD-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkViewsCore-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkInteractionWidgets-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkFiltersModeling-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkInteractionStyle-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkFiltersExtraction-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkIOLegacy-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkIOCore-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkRenderingAnnotation-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkImagingSources-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkIOImage-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkRenderingContext2D-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkRenderingFreeType-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkfreetype-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkzlib-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkRenderingUI-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkImagingCore-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkRenderingCore-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkCommonColor-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkFiltersGeometry-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkFiltersSources-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkFiltersGeneral-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkCommonComputationalGeometry-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkFiltersCore-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkCommonExecutionModel-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkCommonDataModel-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkCommonMisc-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkCommonTransforms-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkCommonMath-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtksys-9.1d.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\Boost\lib\libboost_filesystem-vc142-mt-gd-x64-1_78.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\OpenNI2\x64\Debug\opennurbs_public_staticlib.lib;Shlwapi.lib;D:\Andrea\Dev\C++\CommonLib\libE57Format\Lib\Debug\E57Format-d.lib;D:\Andrea\Dev\C++\CommonLib\xerces-c-3.2.3\lib\src\Debug\xerces-c_3d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>D:\Andrea\Dev\C++\PointCloud\Common\include;D:\Andrea\Dev\C++\CommonLib\tinyxml2;D:\Andrea\Dev\C++\CommonLib\include;D:\Andrea\Dev\C++\CommonLib\json\single_include\nlohmann;D:\Andrea\Dev\C++\PCL 1.12.1\include\pcl-1.12;D:\Andrea\Dev\C++\CommonLib\libE57Format\include;D:\Andrea\Dev\C++\CommonLib\libE57Format\Lib;D:\Andrea\Dev\C++\CommonLib\DFT\pocketfft;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\Eigen\eigen3;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\include\vtk-9.1;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\include\vtk-9.1\vtkfreetype\include;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\FLANN\include;D:\Andrea\Dev\C++\PCL-source\pcl\bin\include;D:\Andrea\Dev\C++\PCL-source\pcl\common\include;D:\Andrea\Dev\C++\PCL-source\pcl\io\include;D:\Andrea\Dev\C++\PCL-source\pcl\filters\include;D:\Andrea\Dev\C++\PCL-source\pcl\sample_consensus\include;D:\Andrea\Dev\C++\PCL-source\pcl\segmentation\include;D:\Andrea\Dev\C++\PCL-source\pcl\search\include;D:\Andrea\Dev\C++\PCL-source\pcl\kdtree\include;D:\Andrea\Dev\C++\PCL-source\pcl\features\include;D:\Andrea\Dev\C++\PCL-source\pcl\surface\include;D:\Andrea\Dev\C++\PCL-source\pcl\octree\include;D:\Andrea\Dev\C++\PCL-source\pcl\registration\include;D:\Andrea\Dev\C++\PCL-source\pcl\geometry\include;D:\Andrea\Dev\C++\PCL-source\pcl\keypoints\include;D:\Andrea\Dev\C++\PCL-source\pcl\ml\include;D:\Andrea\Dev\C++\PCL-source\pcl\vtk\include;D:\Andrea\Dev\C++\PCL-source\pcl\visualization\include;D:\Andrea\Dev\C++\PCL-source\pcl\tools\include;D:\Andrea\Dev\C++\PCL-source\pcl\recognition\include\pcl\recognition\3rdparty;%(AdditionalIncludeDirectories);D:\Andrea\Dev\C++\CommonLib;D:\Andrea\Dev\C++\CommonLib\rapidcsv\src;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\Boost\include\boost-1_78</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <EnableParallelCodeGeneration>false</EnableParallelCodeGeneration>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>D:\Andrea\Dev\C++\CommonLib\tinyxml2\$(Platform)\$(Configuration)\TinyXml2Lib.lib;D:\Andrea\Dev\C++\CommonLib\RplyLib\$(Platform)\$(Configuration)\RplyLib.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_common.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_io.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_features.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_filters.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_io_ply.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_kdtree.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_keypoints.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_ml.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_octree.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_outofcore.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_people.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_recognition.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_registration.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_sample_consensus.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_search.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_segmentation.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_stereo.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_surface.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_tracking.lib;D:\Andrea\Dev\C++\PCL 1.12.1\lib\pcl_visualization.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkViewsContext2D-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkChartsCore-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkCommonCore-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkRenderingOpenGL2-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkRenderingImage-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkRenderingContextOpenGL2-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkInteractionImage-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkRenderingLOD-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkViewsCore-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkInteractionWidgets-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkFiltersModeling-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkInteractionStyle-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkFiltersExtraction-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkIOLegacy-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkIOCore-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkRenderingAnnotation-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkImagingSources-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkIOImage-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkRenderingContext2D-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkRenderingFreeType-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkfreetype-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkzlib-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkRenderingUI-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkImagingCore-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkRenderingCore-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkCommonColor-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkFiltersGeometry-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkFiltersSources-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkFiltersGeneral-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkCommonComputationalGeometry-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkFiltersCore-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkCommonExecutionModel-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkCommonDataModel-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkCommonMisc-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkCommonTransforms-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtkCommonMath-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\VTK\lib\vtksys-9.1.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\Boost\lib\libboost_filesystem-vc142-mt-x64-1_78.lib;D:\Andrea\Dev\C++\PCL 1.12.1\3rdParty\OpenNI2\x64\Release\opennurbs_public_staticlib.lib;Shlwapi.lib;D:\Andrea\Dev\C++\CommonLib\libE57Format\Lib\Release\E57Format.lib;D:\Andrea\Dev\C++\CommonLib\xerces-c-3.2.3\lib\src\Release\xerces-c_3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy  $(OutputPath)$(ProjectName).exe D:\Andrea\Dev\C++\PointCloud\Package\Bin /Y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="WallFinder.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
