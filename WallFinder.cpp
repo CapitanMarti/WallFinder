@@ -829,6 +829,147 @@ int GetWallDirFromJsonFile(const char* sFileName, vector<Eigen::Vector3f> & aWal
     return 0;
 }
 
+void GetBorderIntersect(Eigen::Vector3f& vCentre, Eigen::Vector3f& vDir, int nX, int nY, float & xx, float & yy, int& iBord)
+{
+    float tX=1e+30, tY = 1e+30;
+
+    float vX = vDir.x();
+    int iBorderX = -1;
+    if (vX > 0)
+    {
+        tX = (nX-1 - vCentre.x()) * 1.0 / vX;
+        iBorderX = 1; // Right
+    }
+    else if (vX < 0)
+    {
+        tX = -vCentre.x() * 1.0 / vX;
+        iBorderX = 3; // Left
+    }
+
+    float vY = vDir.y();
+    int iBorderY = -1;
+    if (vY > 0)
+    {
+        tY = (nY-1 - vCentre.y()) * 1.0 / vY;
+        iBorderY = 2; // Bottom
+    }
+    else if (vY < 0)
+    {
+        tY = -vCentre.y() * 1.0 / vY;
+        iBorderY = 0; // Top
+    }
+
+    if (tX < tY)
+    {
+        iBord = iBorderX;
+        if (iBord == 1)
+            xx = nX-1;
+        else
+            xx = 0;
+
+        yy = vCentre.y() + vY * tX;
+        if (yy < 0)
+            yy = 0;
+        else if (yy >= nY)
+            yy = nY - 1;
+    }
+    else
+    {
+        iBord = iBorderY;
+        if (iBord == 2)
+            yy = nY-1;
+        else
+            yy = 0;
+
+        xx = vCentre.x() + vX * tY;
+        if (xx < 0)
+            xx = 0;
+        else if (xx >= nX)
+            xx = nX - 1;
+    }
+}
+
+void CreateFftMask(CAMImage& imgFFTMask, Eigen::Vector3f& vDir, int nBandWidth, int nCenterRadius)
+{
+    // Reset filter
+    imgFFTMask.Reset();
+    Eigen::Vector3f vNegDir(-vDir.x(), -vDir.y(), 0);
+    Eigen::Vector3f vNorm(vDir.y(), -vDir.x(), 0);
+    int nX = imgFFTMask.GetSizeX();
+    int nY = imgFFTMask.GetSizeY();
+
+    Eigen::Vector3f vCentre(nX / 2, nY / 2, 0);
+
+    if (nBandWidth > 0)
+    {
+        Eigen::Vector3f vCentreDown = vCentre - vNorm * nBandWidth;  // Mi sposto dal centro di bandwidth (nel verso opposto alla normale)
+        Eigen::Vector3f vCentreUp = vCentre + vNorm * nBandWidth; // Mi sposto dal centro di bandwidth (nel verso della normale)
+
+        int iBord[4]; // 0==>Top, 1==>Right, 2==>Bottom, 3==>Left
+        vector<float> xx, yy;
+        xx.resize(4);
+        yy.resize(4);
+
+        GetBorderIntersect(vCentreDown, vDir, nX, nY, xx[0], yy[0], iBord[0]);
+        GetBorderIntersect(vCentreDown, vNegDir, nX, nY, xx[1], yy[1], iBord[1]);
+        GetBorderIntersect(vCentreUp, vNegDir, nX, nY, xx[2], yy[2], iBord[2]);
+        GetBorderIntersect(vCentreUp, vDir, nX, nY, xx[3], yy[3], iBord[3]);
+
+        int iTopY = nY + 1;
+        int iBottomY = -1;
+        int iLeftX = nX + 1;
+        int iRightX = -1;
+
+        for (int i = 0; i < 4; i++)
+        {
+            iTopY = min(iTopY, (int)yy[i]);
+            iBottomY = max(iBottomY, (int)yy[i]);
+            iLeftX = min(iLeftX, (int)xx[i]);
+            iRightX = max(iRightX, (int)xx[i]);
+        }
+
+        // Create white band
+        imgFFTMask.PolyRasterize(xx, yy, iTopY, iBottomY, iLeftX, iRightX, 255);
+    }
+    else
+        imgFFTMask.Reset(255);
+
+    if (nCenterRadius > 0)
+    {
+        // Add black circle at centre
+        int nRad2 = nCenterRadius * nCenterRadius;
+        for (int i = -nCenterRadius; i <= nCenterRadius; i++)
+        {
+            for (int j = -nCenterRadius; j <= nCenterRadius; j++)
+            {
+                if (i * i + j * j <= nRad2)
+                    imgFFTMask.SetR(i + vCentre.x(), j + vCentre.y(), 0);
+            }
+
+        }
+    }
+    else
+    {
+        // Add black circle out of centre
+        int nRad2 = nCenterRadius * nCenterRadius;
+        for (int i = nCenterRadius; i <= -nCenterRadius; i++)
+        {
+            for (int j = nCenterRadius; j <= -nCenterRadius; j++)
+            {
+                if (i * i + j * j >= nRad2)
+                    imgFFTMask.SetR(i + vCentre.x(), j + vCentre.y(), 0);
+            }
+
+        }
+    }
+
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    imgFFTMask.WritePng("D:\\Andrea\\Dev\\C++\\PointCloud\\Package\\Project3\\MASK_ProvaBis1.png");
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+}
 
 
 int main(int argc, char** argv)
@@ -919,12 +1060,22 @@ int main(int argc, char** argv)
     GetWallDirFromJsonFile(oCmdOptions.sWallDirectionsFile.c_str(), aWallNormal);
 
     //++++++++++++++++++++++++++++++++++
-    CAMImage imgPng,imgFFT;
+    CAMImage imgPng;
     imgPng.ReadFile("D:\\Andrea\\Dev\\C++\\PointCloud\\Package\\Project3\\ProvaBis1.png");
 
     int nX = imgPng.GetSizeX();
     int nY = imgPng.GetSizeY();
     int n = nX * nY;
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++
+    /*
+    CAMImage imgFFTMask1;
+    imgFFTMask1.Init(nX, nY, 1);
+    int nBandWidth = 30;
+    int nCenterRad = 10;
+    CreateFftMask(imgFFTMask1, aWallNormal[0], nBandWidth, nCenterRad);
+    */
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
     // ---------------- Compute FFT of density image ---------------- 
@@ -950,32 +1101,92 @@ int main(int argc, char** argv)
     }
 
     // Perform fft computation
-    c2c(iShape, iStrideIn, iStrideOut, iAxes, FORWARD, cImgData.data(), cDataOut.data(), 2.f);
+    c2c(iShape, iStrideIn, iStrideOut, iAxes, FORWARD, cImgData.data(), cDataOut.data(), 1.f);
+
+    // Shift high freq to contre
+    vector<complex<float>> cShiftedFft;
+    cShiftedFft.resize(n);
+    fftshift(cShiftedFft.data(), cDataOut.data(), nY, nX);
 
 
-    float fMaxIntensity = 0;
-    for (int i = 0; i < n; i++)
-        fMaxIntensity = max(fMaxIntensity, powf(abs(cDataOut[i]),0.35));
+    if (0)  // Scrittura png della fft Temporaneamente esclusa
+    {
+        CAMImage imgFFT;
+        float fMaxIntensity = 0;
+        for (int i = 0; i < n; i++)
+            fMaxIntensity = max(fMaxIntensity, powf(abs(cShiftedFft[i]), 0.35));
 
-    cout << "fMaxIntensity=" << fMaxIntensity << endl;
+        cout << "fMaxIntensity=" << fMaxIntensity << endl;
 
-    vector<unsigned char> aucTmp;
-    aucTmp.resize(n);
-    for (int i = 0; i < n; i++)
-        aucTmp[i] = unsigned char(255.0 * (powf(abs(cDataOut[i]), 0.35) / fMaxIntensity));
+        imgFFT.Init(nX, nY, 1);
+        unsigned char* aucTmp = imgFFT.GetRawData();
 
-    imgFFT.Init(nX, nY, 1);
-    fftshift(imgFFT.GetRawData(), aucTmp.data(), nY, nX);
+        //    vector<unsigned char> aucTmp;
+        //    aucTmp.resize(n);
 
-    imgFFT.WritePng("D:\\Andrea\\Dev\\C++\\PointCloud\\Package\\Project3\\FFT_ProvaBis1.png");
+        for (int i = 0; i < n; i++)
+            aucTmp[i] = unsigned char(255.0 * (powf(abs(cShiftedFft[i]), 0.35) / fMaxIntensity));
 
-    //++++++++++++++++++++++++++++++++++
+        //    fftshift(imgFFT.GetRawData(), aucTmp.data(), nY, nX);
+
+        imgFFT.WritePng("D:\\Andrea\\Dev\\C++\\PointCloud\\Package\\Project3\\FFT_ProvaBis1.png");
+    }
 
 
 
     // Loop over all wall fragments
-    for(int i=0; i< aWallSurfaces.size(); i++)
+    CAMImage imgFFTMask;
+    imgFFTMask.Init(nX, nY, 1);
+    int nBandWidth = -1;
+    int nCenterRad = -500;// 50;
+    for(int i=0; i< aWallNormal.size(); i++)
     {
+
+        // Create mask for current direction
+        CreateFftMask(imgFFTMask, aWallNormal[i], nBandWidth, nCenterRad);
+
+        // Apply mask to FFT
+        unsigned char* aucMask = imgFFTMask.GetRawData();
+        for (k = 0; k < n; k++)
+            cShiftedFft[k] *= float(aucMask[k]) / 255;
+
+        //++++++++++++++++++++++++
+        CAMImage imgFFT;
+        imgFFT.Init(nX, nY, 1);
+        unsigned char* aucTmp = imgFFT.GetRawData();
+
+        float fMaxIntensity = 0;
+        for (int i = 0; i < n; i++)
+            fMaxIntensity = max(fMaxIntensity, powf(abs(cShiftedFft[i]), 0.35));
+
+        for (int i = 0; i < n; i++)
+            aucTmp[i] = unsigned char(255.0 * (powf(abs(cShiftedFft[i]), 0.35) / fMaxIntensity));
+
+        imgFFT.WritePng("D:\\Andrea\\Dev\\C++\\PointCloud\\Package\\Project3\\MASKED_FFT_ProvaBis1.png");
+        //++++++++++++++++++++++++
+
+        // Shift back
+        ifftshift(cDataOut.data(), cShiftedFft.data(), nY, nX);
+
+        // Perform inverse fft computation
+        c2c(iShape, iStrideIn, iStrideOut, iAxes, BACKWARD, cDataOut.data(), cImgData.data(), 1.f/n);
+
+        //+++++++++++++++++++++++++++++++++
+        int k = 0;
+        unsigned char ucTmp;
+        for (int j = 0; j < nY; j++)
+        {
+            for (int i = 0; i < nX; i++)
+            {
+                ucTmp = unsigned char(cImgData[k].real());
+                imgPng.SetR(i, j, ucTmp);
+                k++;
+            }
+        }
+        imgPng.WritePng("D:\\Andrea\\Dev\\C++\\PointCloud\\Package\\Project3\\ProvaBis1_FILTERED.png");
+
+
+
         // Detect all valid planes parallel to current wall fragment
 //        iErr = DetectPlanesParallelToSegment(pCloud, aWallSurfaces[i], oCmdOptions);
 
