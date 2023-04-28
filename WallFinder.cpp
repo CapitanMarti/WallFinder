@@ -1,4 +1,5 @@
 #include <iostream>
+#include "CLogger/CLogger.h"
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
 #include "CSensorManager.h"
@@ -563,26 +564,26 @@ int LoadAndSliceCloud(PointCloud<PointType>::Ptr pCloud, ON_Plane& oFloorPlane, 
     float zMax = oCeilingPlane.origin.z;
     for (auto& point : *pFullCloud)
     {
-        if (point.z > zMin + 0.5 && point.z < zMax - 0.5 && point.x> -27 && point.x< 23 && point.y>-38.5 && point.y < 21.5)   // NOTA: LIMITI CABLATI SU ESEMPIO!!!!!
-//          if (point.z > zMin + 0.5 && point.z < zMax - 0.5)
+///        if (point.z > zMin + 0.5 && point.z < zMax - 0.5 && point.x> -27 && point.x< 23 && point.y>-38.5 && point.y < 21.5)   // NOTA: LIMITI CABLATI SU ESEMPIO!!!!!
+          if (point.z > zMin + 0.5 && point.z < zMax - 0.5)
         {
             fXmin = min(fXmin, point.x);
             fYmin = min(fYmin, point.y);
             fXmax = max(fXmax, point.x);
-            fYmax = max(fYmax, point.x);
+            fYmax = max(fYmax, point.y);
 
             pCloud->points.push_back(point);
         }
 
-        fZZmin = min(fZZmin, point.x);
-        fZZmax = max(fZZmax, point.x);
+        fZZmin = min(fZZmin, point.z);
+        fZZmax = max(fZZmax, point.z);
     }
     pCloud->width = pCloud->size();
     pCloud->height = 1;
     pCloud->is_dense = false;
 
     //++++++++++++++++++++++++++++++++++
-    iErr = io::save("D:\\Andrea\\Dev\\C++\\PointCloud\\Package\\Project3\\SegmentedPC\\SlicedCloud.pcd", *pCloud);
+    iErr = io::save("D:\\Andrea\\Dev\\C++\\PointCloud\\Package - 2022\\Project3\\SegmentedPC\\SlicedCloud.pcd", *pCloud);
     //++++++++++++++++++++++++++++++++++
 
 
@@ -601,7 +602,7 @@ int LoadAndSliceCloud(PointCloud<PointType>::Ptr pCloud, ON_Plane& oFloorPlane, 
     float* pfBuffer = new float[nX * nY];
     //    float* pfGradBuffer = new float[nX * nY];
 
-    memset(pfBuffer, 0, nX * nY);
+    memset(pfBuffer, 0, nX * nY*sizeof(float));
     //    memset(pfGradBuffer, 0, nX * nY);
 
     float fMax = 0;
@@ -614,6 +615,19 @@ int LoadAndSliceCloud(PointCloud<PointType>::Ptr pCloud, ON_Plane& oFloorPlane, 
     {
         kX = (point.x - fXmin) / fDs;
         kY = nY - 1 - (point.y - fYmin) / fDs;
+
+        if (point.y < 80)
+            point.y = point.y;
+
+        if (kX > nX - 1)
+            kX = nX - 1;
+        else if (kX < 0)
+            kX = 0;
+
+        if (kY > nY - 1)
+            kY = nY - 1;
+        else if (kY < 0)
+            kY = 0;
 
         k = kX + kY * nX;
         pfBuffer[k]++;
@@ -636,10 +650,33 @@ int LoadAndSliceCloud(PointCloud<PointType>::Ptr pCloud, ON_Plane& oFloorPlane, 
     fMean /= nTot;
 
 
-    using namespace boost::histogram;
-    double fDZ = (fMax - fPositiveMin) / 256;
+//+++++++++++++++++++++++++++++++++++
+    memset(pImgBuffer, 255, nX * nY);
+    for (int k = 0; k < nX * nY; k++)
+    {
+        if(pfBuffer[k]>0)
+            pImgBuffer[k] = 255*(1.f- pfBuffer[k]/ fMax);
+    }
+    string sTmp = string("D:\\Andrea\\Dev\\C++\\PointCloud\\Package - 2022\\Project3\\Prova.Png");
+    imgPng.WritePng(sTmp.c_str());
 
-    auto Hist = make_histogram(axis::regular<>(256, fPositiveMin, fMax));
+//+++++++++++++++++++++++++++++++++++
+
+
+
+
+
+    using namespace boost::histogram;
+    int nStep = 256;
+    double fDZ = (fMax - fPositiveMin) / nStep;
+    if (fDZ < 1)
+    {
+        fDZ = 1;
+        nStep = int(fMax - fPositiveMin) + 1;
+
+    }
+
+    auto Hist = make_histogram(axis::regular<>(nStep, fPositiveMin, fMax));
     Hist.fill(aDen);
 
     static bool s_bDebugPanel = false;
@@ -678,14 +715,14 @@ int LoadAndSliceCloud(PointCloud<PointType>::Ptr pCloud, ON_Plane& oFloorPlane, 
             }
         }
 
+        memset(pImgBuffer, 255, nX* nY);
         for (int k = 0; k < nX * nY; k++)
         {
             if (pfBuffer[k] > fT)
-                pImgBuffer[k] = 255;
+                pImgBuffer[k] = 0;
         }
-        string sTmp = string("D:\\Andrea\\Dev\\C++\\PointCloud\\Package\\Project3\\ProvaBis") + to_string(kk) + string(".png");
+        string sTmp = string("D:\\Andrea\\Dev\\C++\\PointCloud\\Package - 2022\\Project3\\ProvaBis") + to_string(kk) + string(".png");
         imgPng.WritePng(sTmp.c_str());
-        memset(pImgBuffer, 0, nX * nY);
 
 
     }
@@ -1006,6 +1043,17 @@ int main(int argc, char** argv)
 
     if (iErr < 0)
         return -1;
+
+    // Get Cloud with point included between floor and ceiling
+    PointCloud<PointType>::Ptr pCloud(new PointCloud<PointType>);
+    ON_Plane oFloorPlane;
+    ON_Plane oCeilingPlane;
+//    double zCentre= 106.5;
+    double zCentre = 0;
+        oFloorPlane.origin.z = 105 - zCentre;
+    oCeilingPlane.origin.z = 110- zCentre;
+    LoadAndSliceCloud(pCloud, oFloorPlane, oCeilingPlane, oCmdOptions.sPCFileName);
+
 
     ON_3dVector vGlobalZ( double(0), double(0), double(1));
 
