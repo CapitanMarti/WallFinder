@@ -701,7 +701,7 @@ int LoadAndSliceCloud(PointCloud<PointType>::Ptr pCloud, ON_Plane& oFloorPlane, 
     }
 
     float afThrash[6] = { .75,.8,.85,.9,.95,.98 };
-    float fT;
+    float fT=0;
     for (int kk = 0; kk < 6; kk++)
     {
         float fTmp = 0;
@@ -1050,8 +1050,8 @@ int main(int argc, char** argv)
     ON_Plane oCeilingPlane;
 //    double zCentre= 106.5;
     double zCentre = 0;
-        oFloorPlane.origin.z = 105 - zCentre;
-    oCeilingPlane.origin.z = 110- zCentre;
+        oFloorPlane.origin.z = -1.3 - zCentre;
+    oCeilingPlane.origin.z = 7.42- zCentre;
     LoadAndSliceCloud(pCloud, oFloorPlane, oCeilingPlane, oCmdOptions.sPCFileName);
 
 
